@@ -7,6 +7,10 @@ var config = {
     dom: {
         createContainer: true
     },
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'game'
+    },
     physics: {
         default: 'arcade',
         arcade: {
