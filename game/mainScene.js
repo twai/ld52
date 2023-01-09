@@ -145,6 +145,12 @@ class MainScene extends Phaser.Scene {
             frameRate: 10
         })
         this.anims.create({
+            key: 'spawner_reopen',
+            repeat: 0,
+            frames: this.anims.generateFrameNumbers('spawner', {start: 4, end: 8}),
+            frameRate: 10
+        })
+        this.anims.create({
             key: 'spawner_close',
             repeat: 0,
             frames: this.anims.generateFrameNumbers('spawner', {start: 8, end: 4}),

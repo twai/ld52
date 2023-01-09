@@ -35,10 +35,8 @@ function createSpawnPoint(scene, x, y, frequency = 1000, offset=0) {
 
         }
         this.updateCtr += dt;
-        // console.log('++');
 
         if(this.updateCtr > this.frequency) {
-            console.log('Spawn!');
             this.updateCtr -= this.frequency;
             scene.spawnEnemy(this.sprite.x, this.sprite.y);
         }
@@ -52,7 +50,7 @@ function createSpawnPoint(scene, x, y, frequency = 1000, offset=0) {
 
     spawnPoint.open = function() {
         this.isOpen = true;
-        this.sprite.anims.play('spawner_open')
+        this.sprite.anims.play('spawner_reopen')
         this.updateCtr = Math.max(0, this.frequency - 1000);
     }
 
