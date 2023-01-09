@@ -61,7 +61,4 @@ function createEnemy(scene, x, y) {
             }
         });
     }
-
-
-    // return sprite;
 }

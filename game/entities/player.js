@@ -66,12 +66,6 @@ function createPlayer(scene, x, y) {
     player.moving = false;
     player.setDepth(1);
 
-
-
-   // slash.setScale(scale)
-
-    // console.log(sprite.);
-
     if(scene.cursors == undefined) {
         console.warn('Parents creating a player should have cursor keys!');
     }
