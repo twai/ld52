@@ -118,39 +118,11 @@ function createPlayer(scene, x, y) {
             delay: time,
             callback: function(){player.sprite.clearTint();}
         });
-        return;
-        scene.tweens.addCounter({
-            onUpdateParams: null,
-            onCompleteParams: player,
-            from: 0,
-            to: 360 * dir,
-            duration: 300,
-            repeat: 0,
-            ease: 'Back',
-            onUpdate: function(tween, target, _1, _2, _3) {
-                //console.log(tween);
-                //console.log(target);
-                player.scythe.setAngle(tween.getValue());
-            },
-            completeDelay: 200,
-            onComplete: function(tween) {
-                player.canRotate = true
-               // player.scythe.anims.play('scythe_idle');
-            }
-        })
     }
 
     player.update = function(time, dt) {
         soulShield.setAngle((time * 0.01) % 360);
-        /*
-        var speed = this.speed;
-        if(this.usePerspective) {
-            var distance = Math.max(0.25, sprite.getBottomCenter().y - 279);
-            var sizeFac = (1 + ((distance / 321) * 1.5)) / 4;
-            sprite.setScale(sizeFac);
-            speed *= sizeFac;
-        }
-*/
+        
         var speed = this.speed;
 
         var scene = this.parent;
@@ -163,38 +135,22 @@ function createPlayer(scene, x, y) {
             return;
         }
 
-        /*
-        if(scene.cursors.n.isDown && totalSouls >= 10) {
-            totalSouls -= 10;
-            createBarrier(scene, player.x + 150, player.y);
-            scene.events.emit('updateSoulBar', totalSouls, 500);
-        }
-        */
-
         if(this.allowMovement) {
             if(scene.cursors.left.isDown) {
                 velocity.x -= 1;
-                // this.scaleX = -1 * scale;
                 if(!this.isFlipped) {
                     this.list.forEach(o => o.flipX = true);
                     this.scythe.x = -70
                     this.isFlipped = true;
-                    // this.sprite.flipX = true
-                    // this.scythe.flipX = true
                 }
-
-               // this.flipX = true;
             }
             if(scene.cursors.right.isDown) {
                 velocity.x += 1;
-                //this.flipX = false;
                 if(this.isFlipped) {
                     this.list.forEach(o => o.flipX = false);
                     this.scaleX = 1 * scale;
                     this.scythe.x = 70
                     this.isFlipped = false;
-                    // this.sprite.flipX = false
-                    // this.scythe.flipX = false
                 }
                 
             }
@@ -226,19 +182,14 @@ function createPlayer(scene, x, y) {
                 repeat: 0,
                 ease: 'Back',
                 onUpdate: function(tween, target, _1, _2, _3) {
-                    //console.log(tween);
-                    //console.log(target);
                     player.scythe.setAngle(tween.getValue());
                 },
                 completeDelay: 200,
                 onComplete: function(tween) {
                     player.canRotate = true
-                   // player.scythe.anims.play('scythe_idle');
                 }
             })
 
-            //this.slash.x = this.slashOffset.x * dir;
-            //this.slash.flipX = this.isFlipped;
             scene.sound.play('slash')
             this.slash.enableBody();
             this.slash.visible = true;
@@ -253,21 +204,17 @@ function createPlayer(scene, x, y) {
                 onStart: function(tween) {
                     player.slash.x = player.slashOffset.x * dir;
                     console.log('Setting flip to', player.isFlipped ? 'true' : 'false')
-                    // player.slash.flipX = player.isFlipped ? true : false;
                 },
 
                 onUpdate: function(tween, target, _1, _2, _3, startX, startY, spawnDir) {
                     player.slash.alpha = tween.getValue();
-                    // console.log(spawnDir)
                     player.slash.y = player.slashOffset.y;
                     player.slash.x = (player.slashOffset.x + (1 - tween.getValue()) * 100) * (player.isFlipped ? -1 : 1);
                 },
                 onComplete: function(tween) {
-                    // player.slash.visible = false;
                     player.slash.disableBody();
                 }
             })
-            // Spin scythe
         }
 
 
@@ -288,48 +235,6 @@ function createPlayer(scene, x, y) {
             }
         }
         this.body.setVelocity(velocity.x, velocity.y);
-
-        // if(this.getRightCenter().x >= 1000) {
-        //     console.log(this.getRightCenter().x)
-        //     if(this.pressed.right === 0){
-        //         this.pressed.right = 1;
-        //         this.setSize(spriteSize.x / 1.25, spriteSize.y, true);
-        //         this.anims.play('right_collide');
-        //     }
-        //     else if(this.pressed.right === 1 && scene.cursors.right.isDown) {
-        //         this.pressed.right = 2;
-        //         this.setSize(spriteSize.x / 1.6, spriteSize.y), true;
-        //         this.anims.play('right_collide_hard');
-        //     }
-        //     else if(this.pressed.right === 2 && !scene.cursors.right.isDown) {
-        //         this.setSize(spriteSize.x / 1.25, spriteSize.y, true);
-        //         this.pressed.right = 1;
-        //         this.anims.play('right_collide');
-        //     }
-        // }
-        // else if (this.getLeftCenter().x <= 0) {
-        //     if(this.pressed.left === 0){
-        //         this.pressed.left = 1;
-        //         this.setSize(spriteSize.x / 1.25, spriteSize.y, true);
-        //         this.anims.play('left_collide');
-        //     }
-        //     else if(this.pressed.left === 1 && scene.cursors.left.isDown) {
-        //         this.pressed.left = 2;
-        //         this.setSize(spriteSize.x / 1.6, spriteSize.y, true);
-        //         this.anims.play('left_collide_hard');
-        //     }
-        //     else if(this.pressed.left === 2 && !scene.cursors.left.isDown) {
-        //         this.pressed.left = 1;
-        //         this.setSize(spriteSize.x / 1.25, spriteSize.y, true);
-        //         this.anims.play('left_collide');
-        //     }
-        // }
-        // else if (this.pressed.right > 0 || this.pressed.left > 0) {
-        //     this.pressed.right = 0;
-        //     this.pressed.left = 0;
-        //     this.setCircle(128, 0, 0);
-        //     this.anims.play('idle');
-        // }
     }
 
     player.hit = function(attacker, self) {
@@ -338,8 +243,8 @@ function createPlayer(scene, x, y) {
         }
 
         console.log(attacker)
-        scene.sound.play('die');
         if(player.lives > 0) {
+            scene.sound.play('die');
             player.lives -= 1;
             console.log('setting lives to', player.lives);
             scene.events.emit('setLives', player.lives);
@@ -352,8 +257,6 @@ function createPlayer(scene, x, y) {
             scene.time.delayedCall(500, () => {
                 player.invincible = false;
             }, [], this);
-           // player.x = 50
-           // player.y = 50
         }
         else {
             window.location.reload();
